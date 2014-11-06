@@ -1,0 +1,28 @@
+from random import randint
+from sys import exit
+
+x = randint(1,10)
+guessCount = 0
+name = raw_input("What is your name? ")
+
+while guessCount < 6:
+	guessCount += 1
+	y = raw_input('Guess a number between 1 and 10: ')
+	y = int(y)
+	
+	if y < x:
+		print "%s your guess is too low" % name
+		
+	if y > x:
+		print "%s your guess is too high" % name
+		
+	if y == x:
+		break
+		
+if y == x:
+	print "Good job %s, you guessed the right number!" % name
+	exit(0)
+else:
+	print "You are bad at guessing, the correct number was %d" % x
+	exit(0)
+		
