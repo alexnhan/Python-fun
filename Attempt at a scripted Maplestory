@@ -1,0 +1,481 @@
+from sys import exit
+from random import randint
+
+class Scene(object):
+
+	character = raw_input('What is your name explorer? ')
+	
+	def enter(self):
+		print "Hello %s, I will now send you to Beginner Island to train." % Scene.character
+		print '**' * 10
+		return 'beginner_island'
+		
+class Engine(object):
+
+	def __init__(self, scene_map):
+		self.scene_map = scene_map # initialize
+		
+	def play(self):
+		current_scene = self.scene_map.opening_scene() # current_scene = Scene()
+		last_scene = self.scene_map.next_scene('last') # last_scene = Last()
+		
+		while current_scene != last_scene:
+			next_scene_name = current_scene.enter() # next_scene_name = what is returned from call enter() function from the current scene aka next_scene_name = beginner_island
+			current_scene = self.scene_map.next_scene(next_scene_name) # rewrite current_scene to the next scene that is returned from the enter() function of the current scene aka current_scene = BeginnerIsland()
+			
+			#current_scene.enter()
+
+class Death(Scene):
+
+	quips = [
+		"You died. Just quit this game.",
+		"Fuck you bitch.",
+		"Fuck off aka go away",
+		"Yeah bitch yeah bitch you suck"
+	]
+	
+	def enter(self):
+		print Death.quips[randint(0,len(self.quips)-1)]
+		exit(10)
+		
+class BeginnerIsland(Scene):
+	
+	def enter(self):
+		print "You enter Beginner Island as a complete noob."
+		print "You encountered a snail, do you want to fight or flee?"
+		
+		decision = raw_input('> ')
+		
+		if decision == 'fight':
+			print "You smack the snail so hard in the head with your man hammer"
+			print "that it crumbles and dies. Good job!"
+			print "You can now advance to your first world of Ho Land!"
+			print "Easy right?"
+			print "**" * 10
+			return 'ho_land'
+		elif decision == 'flee':
+			print "You try to run, but the snail chases you and eats you."
+			return 'death'
+		else:
+			print "That is not a command."
+			return 'beginner_island'
+		
+class HoLand(Scene):
+
+	weapons = {
+		'Wind Breaker': 'Bow', 
+		'Fire Torcher': 'Staff', 
+		'Ice Princess': 'Ice Sword',
+		'Mother Nature': 'Rock Sword',
+	}
+	
+	attacks = {
+		'Wind Breaker': 'you fling your arrows', 
+		'Fire Torcher': 'you cast a fireball', 
+		'Ice Princess': 'you throw your icicles',
+		'Mother Nature': 'you slash your sword',
+	}
+	
+	def enter(self):
+		print "You finally enter your first professional world."
+		print "What class do you want to be? Wind Breaker, Fire Torcher,"
+		print "Ice Princess, or Mother Nature?"
+		character = raw_input("> ")
+		print "Here is a gift: %s" % HoLand.weapons[character]
+		print "ALERT!"
+		print "Ella needs your help for your very first quest!"
+		print "She is trapped by a Balrog who is using her to do his house chores."
+		print "Confront this Balrog and save Ella!"
+		print "**" * 10
+		print "Balrog: 'Who are you noob traveler'"
+		print "%s: 'I am no noob traveler! I am %s, savior of the world!'" % (character, character)
+		print "Balrog: 'Well what are you doing here dummy!'"
+		print "%s: 'I am here to save Ella from your slavery!'" % character
+		print "Balrog: 'HAHA, you can never take her from me!'"
+		print "This Balrog seems to not be negotiable, you will have to take action."
+		print "**" * 10
+		print "Attack the Balrog with your %s, try to negotiate a trade, " % HoLand.weapons[character]
+		print "or try to tell a joke to distract the Balrog while Ella runs."
+		print "Enter: Attack, Negotiate, or Joke"
+		action = raw_input("> ")
+		
+		if action == "Attack":
+			print "You pull out your %s, and %s at the Balrog's head!" % (HoLand.weapons[character], HoLand.attacks[character])
+			print "Balrog is caught by surprise and his head comes off and dies!"
+			print "You run to save Ella, and she is so thankful she gives you head."
+			print "After that terrific head, you advance to Vilania!"
+			print "**" * 10
+			return 'vilania'
+		elif action == "Negotiate":
+			print "You are a reasonable person, and you try to reason with this Balrog."
+			print "You tell him slavery isn't right, and to let Ella go."
+			print "The Balrog takes a quick bite at your head and eats you."
+			return 'death'
+		elif action == "Joke":
+			print "You tell the Balrog your favorite knock-knock joke."
+			print "%s: Knock Knock" % character
+			print "Balrog: Whose there?"
+			print "%s: Go fuck yourself." % character
+			print "The Balrog is completely offended by your joke, "
+			print "and unleashes a kam-a-ham-a-hah at you!"
+			return 'death'
+		else:
+			print "That is not one of the commands recognized."
+			return 'HoLand'
+
+class Vilania(Scene):
+	
+	def enter(self):
+		print "Welcome to Vilania! Here in this land, we offer the power"
+		print "of the second job.  It won't be easy though."
+		print "It will take luck and skill to complete this quest and receive your"
+		print "second job.  Well enough yabbering, lets get into it."
+		ans1 = raw_input('What is 9 + 10? ')
+		ans1 = int(ans1)
+		if ans1 != 19:
+			return 'death'
+		else:
+			print "Great you got it correct."
+			pass
+		ans2 = raw_input("What is the following number of this number series: 2, 3, 5, ? ")
+		ans2 = int(ans2)
+		if ans2 != 7:
+			return 'death'
+		else:
+			print "Cool you know your first 4 prime numbers."
+			pass
+		ans3 = raw_input("What was the land where you received your first job? ")
+		if ans3 != "Ho Land":
+			return 'death'
+		else:
+			print "Good."
+			return 'mehe_island'
+
+	
+class MeheIsland(Scene):
+		
+	second_class = {
+		'Wind Breaker': 'Air Bender', 
+		'Fire Torcher': 'Fire Bender', 
+		'Ice Princess': 'Water Bender',
+		'Mother Nature': 'Earth Bender',
+	}
+	
+	zakum_body = ['arm#1', 'arm#2', 'arm#3', 'arm#4', 'arm#5', 'arm#6', 'arm#7', 'arm#8', 'body#1', 'body#2', 'body#3']
+	
+	def enter(self):
+		ans4 = raw_input('What was your first job? ')
+		if ans4 == 'Wind Breaker':
+			new_class = MeheIsland.second_class[ans4]
+			print "Congratulations, you are now a %s!" % new_class
+		elif ans4 == 'Fire Torcher':
+			new_class = MeheIsland.second_class[ans4]
+			print "Congratulations, you are now a %s!" % new_class
+		elif ans4 == 'Ice Princess':
+			new_class = MeheIsland.second_class[ans4]
+			print "Congratulations, you are now a %s!" % new_class
+		elif ans4 == 'Mother Nature':
+			new_class = MeheIsland.second_class[ans4]
+			print "Congratulations, you are now a %s!" % new_class
+		else:
+			print "You don't even know your first class!"
+			return 'death'
+		
+		print "**" * 10
+		print "Welcome to Mehe Island, %s the %s." % (super(MeheIsland, self).character, new_class)
+		print "For your next quest you must kill Zakum and collect his head."
+		print "The tough thing about Zakum is that you must kill him in a certain order."
+		print "First off with his 8 arms, then off with his first body, then second body, then third body."
+		print "Attack like this: arm#1-8 and then body#1-3."
+		print "If you do not do this in the right order you will be consumed by Zakum!"
+		print "I will now teleport you to his den."
+		print "ZZZZZZZZZZPP"
+		print "Zakum: 'Whose there? Is it my lunch?'"
+		print "%s: 'No you fat fuck, it's your death wish.'" % new_class
+		print "Zakum: 'WTF I will fuck you up tiny piece of shit. Do you even lift?'"
+		print "%s: 'I don't, but I can still fuck you up!'" % new_class
+		first_hit = raw_input("Hiiiiyah! ")
+		if first_hit != MeheIsland.zakum_body[0]:
+			print "You hit the wrong part of Zakum noobshit!"  
+			return 'death'
+		else:
+			pass
+		second_hit = raw_input("Biyahhh! ")
+		if second_hit != MeheIsland.zakum_body[1]:
+			print "You hit the wrong part of Zakum noobshit!"  
+			return 'death'
+		else:
+			pass
+		third_hit = raw_input("Trahhhh! ")
+		if third_hit != MeheIsland.zakum_body[2]:
+			print "You hit the wrong part of Zakum noobshit!"  
+			return 'death'
+		else:
+			pass
+		fourth_hit = raw_input("Fahhhhh! ")
+		if fourth_hit != MeheIsland.zakum_body[3]:
+			print "You hit the wrong part of Zakum noobshit!"  
+			return 'death'
+		else:
+			pass
+		fifth_hit = raw_input("Rahhh! ")
+		if fifth_hit != MeheIsland.zakum_body[4]:
+			print "You hit the wrong part of Zakum noobshit!"  
+			return 'death'
+		else:
+			pass
+		sixth_hit = raw_input("Sahhhh! ")
+		if sixth_hit != MeheIsland.zakum_body[5]:
+			print "You hit the wrong part of Zakum noobshit!"  
+			return 'death'
+		else:
+			pass
+		seventh_hit = raw_input("Setahhh! ")
+		if seventh_hit != MeheIsland.zakum_body[6]:
+			print "You hit the wrong part of Zakum noobshit!"  
+			return 'death'
+		else:
+			pass
+		eighth_hit = raw_input("Eyahhhhh! ")
+		if eighth_hit != MeheIsland.zakum_body[7]:
+			print "You hit the wrong part of Zakum noobshit!"  
+			return 'death'
+		else:
+			pass
+		ninth_hit = raw_input("Nyahhhh! ")
+		if ninth_hit != MeheIsland.zakum_body[8]:
+			print "You hit the wrong part of Zakum noobshit!"  
+			return 'death'
+		else:
+			pass
+		tenth_hit = raw_input("Tyahh! ")
+		if tenth_hit != MeheIsland.zakum_body[9]:
+			print "You hit the wrong part of Zakum noobshit!"  
+			return 'death'
+		else:
+			pass
+		eleventh_hit = raw_input("RAWRAWRWARAWRWRAWR! ")
+		if eleventh_hit != MeheIsland.zakum_body[10]:
+			print "You hit the wrong part of Zakum noobshit!"  
+			return 'death'
+		else:
+			print "Great job! You defeated the almighty Zakum!"
+			print "You can now cut off his head, and keep it as a trophy!"
+			return 'vinhan_island'
+			
+class VinhanIsland(Scene):
+	
+	def enter(self):
+		print '$$' * 10
+		print "Welcome to the luxurious Vinhan Island!"
+		print "This your last land, where you can obtain your third job."
+		print "Don't worry about fighting any monsters though, there are none here."
+		print "This is the land of the rich and people with the third job of Avatar."
+		print "Avatars can destroy any monster with one blow, this is why they are"
+		print "scared to come here."
+		print "We are offering you this position to become one of us, one of the Avatars."
+		print "You will only need to complete seven challenges."
+		print "Here we go."
+		print '$$' * 10
+		print "What is the output of the following inputs to an AND gate with:"
+		a = int(raw_input("0 0: "))
+		if a != 0:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		b = int(raw_input("1 0: "))
+		if b != 0:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		c = int(raw_input("0 1: "))
+		if c != 0:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		d = int(raw_input("1 1: "))
+		if d != 1:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		print "What is the output of the following inputs to an OR gate with:"
+		e = int(raw_input("0 0: "))
+		if e != 0:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		f = int(raw_input("1 0: "))
+		if f != 1:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		g = int(raw_input("0 1: "))
+		if g != 1:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		h = int(raw_input("1 1: "))
+		if h != 1:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		print "What is the output of the following inputs to a NAND gate with:"
+		i = int(raw_input("0 0: "))
+		if i != 1:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		j = int(raw_input("1 0: "))
+		if j != 1:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		k = int(raw_input("0 1: "))
+		if k != 1:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		l = int(raw_input("1 1: "))
+		if l != 0:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		print "What is the output of the following inputs to a NOR gate with:"
+		m = int(raw_input("0 0: "))
+		if m != 1:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		n = int(raw_input("1 0: "))
+		if n != 0:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		o = int(raw_input("0 1: "))
+		if o != 0:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		p = int(raw_input("1 1: "))
+		if p != 0:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		print "What is the output of the following inputs to a XOR gate with:"
+		q = int(raw_input("0 0: "))
+		if q != 0:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		r = int(raw_input("1 0: "))
+		if r != 1:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		s = int(raw_input("0 1: "))
+		if s != 1:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		t = int(raw_input("1 1: "))
+		if t != 0:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		print "What is the output of the following inputs to a XNOR gate with:"
+		u = int(raw_input("0 0: "))
+		if u != 1:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		v = int(raw_input("1 0: "))
+		if v != 0:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		w = int(raw_input("0 1: "))
+		if w != 0:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		x = int(raw_input("1 1: "))
+		if x != 1:
+			print "You fail, I dismiss you off this island!"
+			return 'death'
+		else:
+			pass
+		y = raw_input("Are there any gates that I am missing? ")
+		if 'o' in y:
+			pass
+		else:
+			print "You got the last answer wrong you!"
+			return 'death'
+		print "Congratulations! You are now an Avatar!"
+		print "We will set you up with a mansion and anything else you want right away!"
+		return 'finished'
+		
+class Finished(Scene):
+
+	def enter(self):
+		print "**" * 10
+		print "You have beat the game!"
+		print "%s, you now live happily ever after in Vinhan Island as a beloved Avatar." % super(Finished, self).character
+		return 'last'
+		
+class Last(Scene):
+	pass
+	
+class Map(object):
+
+	scenes = {
+		'scene': Scene(),
+		'beginner_island': BeginnerIsland(),
+		'ho_land': HoLand(),
+		'vilania': Vilania(),
+		'mehe_island': MeheIsland(),
+		'vinhan_island': VinhanIsland(),
+		'death': Death(),
+		'finished': Finished(),
+		'last': Last(),
+	}
+	
+	def __init__(self, start_scene):
+		self.start_scene = start_scene # initialize
+		
+	def next_scene(self, scene_name):
+		val = Map.scenes.get(scene_name) # gets the scene from the dictionary of scenes aka HoLand()
+		return val # returns that scene aka HoLand()
+		
+	def opening_scene(self):
+		return self.next_scene(self.start_scene) # returns the opening scene aka Scene()
+		
+		
+a_map = Map('scene')
+a_game = Engine(a_map)
+a_game.play()
+
+	
+	
