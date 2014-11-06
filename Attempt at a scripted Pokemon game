@@ -1,0 +1,120 @@
+from sys import exit
+
+def flee():
+	print "You run away like a scaredy cat."
+	exit(0)
+
+def thunderbolt():
+	global hp
+	hp = hp - 25
+	print "Pokemon's hp is: %d" % hp
+	if hp <= 0:
+		print "You killed the Pokemon! Good Job!"
+		exit(0)
+	battle1()
+
+def bite():
+	global hp
+	hp = hp - 20
+	print "Pokemon's hp is: %d" % hp
+	if hp <= 0:
+		print "You killed the Pokemon! Good Job!"
+		exit(0)
+	battle1()
+	
+def quickAttack():
+	global hp
+	hp = hp - 15
+	print "Pokemon's hp is %d" % hp
+	if hp <= 0:
+		print "You killed the Pokemon! Good Job!"
+		exit(0)
+	battle1()
+
+def whiplash():
+	global hp
+	hp = hp - 10
+	print "Pokemon's hp is: %d" % hp
+	if hp <= 0:
+		print "You killed the Pokemon! Good Job!"
+		exit(0)
+	battle1()
+	
+def catch():
+	global hp
+	if hp < 30:
+		print "Catch successful!"
+		flee()
+	elif hp >= 30:
+		print "Pokemon struggled and got out of your Pokeball"
+		print "Pokemon's hp is: %d" % hp
+		battle1()
+
+def battle1():
+	print "What attack do you want to use?"
+	print "* Thunderbolt (type: Thunderbolt)"
+	print "* Bite (type: Bite)"
+	print "* Quick Attack (type: Quick Attack)"
+	print "* Whiplash (type: Whiplash)"
+	print "* Catch the Pokemon (type: Catch)"
+	
+	choice = raw_input("> ")
+	
+	if choice == "Thunderbolt":
+		thunderbolt()
+	elif choice == "Bite":
+		bite()
+	elif choice == "Quick Attack":
+		quickAttack()
+	elif choice == "Whiplash":
+		whiplash()
+	elif choice == "Catch":
+		catch()
+	else:
+		print "I do not understand that command"
+		battle1()	
+	
+def battle():
+	print "You have summoned Pikachu."
+	print "What attack do you want to use?"
+	print "* Thunderbolt (type: Thunderbolt)"
+	print "* Bite (type: Bite)"
+	print "* Quick Attack (type: Quick Attack)"
+	print "* Whiplash (type: Whiplash)"
+	print "* Catch the Pokemon (type: Catch)"
+	
+	choice = raw_input("> ")
+	
+	if choice == "Thunderbolt":
+		thunderbolt()
+	elif choice == "Bite":
+		bite()
+	elif choice == "Quick Attack":
+		quickAttack()
+	elif choice == "Whiplash":
+		whiplash()
+	elif choice == "Catch":
+		catch()
+	else:
+		print "I do not understand that command"
+		battle1()
+
+def start():
+	print "You encountered a Pokemon"
+	print "Do you want to battle or flee"
+	
+	choice = raw_input("> ")
+	
+	if choice == "battle":
+		battle()
+	elif choice == "flee":
+		flee()
+	else:
+		print "I do not recognize that command."
+		start()
+
+hp = 100
+start()
+
+
+
