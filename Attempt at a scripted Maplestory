@@ -102,7 +102,7 @@ class HoLand(Scene):
 		if action == "Attack":
 			print "You pull out your %s, and %s at the Balrog's head!" % (HoLand.weapons[character], HoLand.attacks[character])
 			print "Balrog is caught by surprise and his head comes off and dies!"
-			print "You run to save Ella, and she is so thankful she gives you head."
+			print "You run to save Ella, and she is so thankful she gives you the head of the Balrog."
 			print "After that terrific head, you advance to Vilania!"
 			print "**" * 10
 			return 'vilania'
