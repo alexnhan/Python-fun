@@ -29,9 +29,6 @@ class Death(Scene):
 
 	quips = [
 		"You died. Just quit this game.",
-		"Fuck you bitch.",
-		"Fuck off aka go away",
-		"Yeah bitch yeah bitch you suck"
 	]
 	
 	def enter(self):
@@ -115,7 +112,7 @@ class HoLand(Scene):
 			print "You tell the Balrog your favorite knock-knock joke."
 			print "%s: Knock Knock" % character
 			print "Balrog: Whose there?"
-			print "%s: Go fuck yourself." % character
+			print "%s: Go f yourself." % character
 			print "The Balrog is completely offended by your joke, "
 			print "and unleashes a kam-a-ham-a-hah at you!"
 			return 'death'
@@ -191,9 +188,9 @@ class MeheIsland(Scene):
 		print "I will now teleport you to his den."
 		print "ZZZZZZZZZZPP"
 		print "Zakum: 'Whose there? Is it my lunch?'"
-		print "%s: 'No you fat fuck, it's your death wish.'" % new_class
-		print "Zakum: 'WTF I will fuck you up tiny piece of shit. Do you even lift?'"
-		print "%s: 'I don't, but I can still fuck you up!'" % new_class
+		print "%s: 'No you fatty, it's your death wish.'" % new_class
+		print "Zakum: 'I will crush you to tiny pieces. Do you even lift?'"
+		print "%s: 'I don't, but I can still destroy you!'" % new_class
 		first_hit = raw_input("Hiiiiyah! ")
 		if first_hit != MeheIsland.zakum_body[0]:
 			print "You hit the wrong part of Zakum noobshit!"  
